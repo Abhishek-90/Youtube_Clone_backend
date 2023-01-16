@@ -33,19 +33,22 @@ router.get("/getVideos", async (req: Request, res: Response) => {
       };
     });
 
-    videoData.forEach(async (item: IVideoData, index: any) => {
+    for (const video of videoData) {
       const channelResponse = await fetch(
-        `https://www.googleapis.com/youtube/v3/channels?id=${item.channelId}&key=${C.API_KEY}&part=snippet`,
+        `${C.GET_CHANNEL_ENDPOINT}id=${video.channelId}&key=${C.API_KEY}&part=snippet`,
         {
           method: "GET",
         }
       );
       const channelJson = await channelResponse.json();
-      item.channelThumbnailUrl = channelJson.snippet.thumbnails.high.url;
-    });
+      video.channelThumbnailUrl =
+        channelJson.items[0].snippet.thumbnails.high.url;
+    }
 
     return res.status(HS.OK).json({ videoData }).end();
-  } catch (error) {}
+  } catch (error) {
+    return res.status(HS.BADREQUEST).json({ error });
+  }
 });
 
 export default router;
