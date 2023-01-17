@@ -5,7 +5,6 @@ import * as HS from "../Shared/Constants/HTTPStatus";
 
 const router = express.Router();
 router.get("/getVideos", async (req: Request, res: Response) => {
-  let videoData: IVideoData[] = [];
   try {
     const response = await fetch(
       `${C.GET_VIDEOS_ENDPOINT}part=player,statistics,snippet&key=${C.API_KEY}&chart=mostPopular&maxResults=20`
@@ -13,7 +12,7 @@ router.get("/getVideos", async (req: Request, res: Response) => {
     const json = await response.json();
     const videoItems = json.items;
 
-    videoData = videoItems.map((video: any) => {
+    let videoData: IVideoData[] = videoItems.map((video: any) => {
       // Retrieveing Videos Data.
       return {
         id: video.id,
