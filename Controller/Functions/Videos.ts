@@ -40,7 +40,7 @@ export const getVideosFromAPI = async (url: string) => {
         channelJson.items[0].snippet.thumbnails.high.url;
     }
 
-    return { status: HS.BADREQUEST, videoData };
+    return { status: HS.OK, videoData };
   } catch (error) {
     return { status: HS.BADREQUEST, error };
   }
