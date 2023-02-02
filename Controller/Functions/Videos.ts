@@ -30,7 +30,7 @@ export const getVideosFromAPI = async (url: string) => {
 
     for (const video of videoData) {
       const channelResponse = await fetch(
-        `${C.GET_CHANNEL_ENDPOINT}id=${video.channelId}&key=${C.API_KEY}&part=snippet`,
+        `${C.YOUTUBE_API}${C.GET_CHANNEL_ENDPOINT}id=${video.channelId}&key=${C.API_KEY}&part=snippet`,
         {
           method: "GET",
         }
